@@ -1,44 +1,57 @@
-# decompress-tar [![Build Status](https://travis-ci.org/kevva/decompress-tar.svg?branch=master)](https://travis-ci.org/kevva/decompress-tar)
+@xingrz/decompress-tar [![test](https://github.com/xingrz/decompress-tar/actions/workflows/test.yml/badge.svg)](https://github.com/xingrz/decompress-tar/actions/workflows/test.yml)
+==========
 
-> tar decompress plugin
+[![][npm-version]][npm-url] [![][npm-downloads]][npm-url] [![license][license-img]][license-url] [![issues][issues-img]][issues-url] [![stars][stars-img]][stars-url] [![commits][commits-img]][commits-url]
 
+[@xingrz/decompress](https://github.com/xingrz/decompress) .tar plugin.
 
 ## Install
 
 ```
-$ npm install decompress-tar
+$ npm install --save @xingrz/decompress-tar
 ```
-
 
 ## Usage
 
-```js
-const decompress = require('decompress');
-const decompressTar = require('decompress-tar');
+```ts
+import decompress from '@xingrz/decompress';
+import decompressTar from '@xingrz/decompress-tar';
 
-decompress('unicorn.tar', 'dist', {
-	plugins: [
-		decompressTar()
-	]
-}).then(() => {
+(async () => {
+	await decompress('unicorn.tar', 'dist', {
+		plugins: [
+			decompressTar()
+		]
+	});
+
 	console.log('Files decompressed');
-});
+})();
 ```
-
 
 ## API
 
-### decompressTar()(input)
+### `decompressTar(): (input: Buffer | Readable) => Promise<File[]>`
 
-Returns both a Promise for a Buffer and a [Duplex stream](https://nodejs.org/api/stream.html#stream_class_stream_duplex).
+Returns a `Promise<File[]>`.
 
 #### input
 
-Type: `Buffer` `Stream`
+Type: `Buffer` or [`stream.Readable`](https://nodejs.org/dist/latest-v16.x/docs/api/stream.html#class-streamreadable)
 
 Buffer or stream to decompress.
 
-
 ## License
 
-MIT © [Kevin Mårtensson](https://github.com/kevva)
+[MIT License](LICENSE)
+
+[npm-version]: https://img.shields.io/npm/v/@xingrz/decompress-tar.svg?style=flat-square
+[npm-downloads]: https://img.shields.io/npm/dm/@xingrz/decompress-tar.svg?style=flat-square
+[npm-url]: https://www.npmjs.com/package/@xingrz/decompress-tar
+[license-img]: https://img.shields.io/github/license/xingrz/decompress-tar?style=flat-square
+[license-url]: LICENSE
+[issues-img]: https://img.shields.io/github/issues/xingrz/decompress-tar?style=flat-square
+[issues-url]: https://github.com/xingrz/decompress-tar/issues
+[stars-img]: https://img.shields.io/github/stars/xingrz/decompress-tar?style=flat-square
+[stars-url]: https://github.com/xingrz/decompress-tar/stargazers
+[commits-img]: https://img.shields.io/github/last-commit/xingrz/decompress-tar?style=flat-square
+[commits-url]: https://github.com/xingrz/decompress-tar/commits/master
