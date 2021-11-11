@@ -1,4 +1,5 @@
 import { readFileSync, createReadStream } from 'fs';
+import { Stream } from 'stream';
 import { join } from 'path';
 import fileType from 'file-type';
 import m from '../src';
@@ -14,7 +15,7 @@ test('extract file', async () => {
 	const files = await m()(buf);
 
 	expect(files[0].path).toBe('test.jpg');
-	expect(await isJpg(files[0].data)).toBe(true);
+	expect(files[0].data && await isJpg(files[0].data)).toBe(true);
 });
 
 test('extract file using streams', async () => {
@@ -22,7 +23,21 @@ test('extract file using streams', async () => {
 	const files = await m()(stream);
 
 	expect(files[0].path).toBe('test.jpg');
-	expect(await isJpg(files[0].data)).toBe(true);
+	expect(files[0].data && await isJpg(files[0].data)).toBe(true);
+});
+
+test('extract file to fileWriter', async () => {
+	const fileWriter = jest.fn().mockResolvedValue(null);
+
+	const buf = readFileSync(join(FIXTURES_DIR, 'file.tar'));
+	const files = await m()(buf, { fileWriter });
+
+	expect(files[0].path).toBe('test.jpg');
+	expect(files[0].data).toBeUndefined();
+
+	expect(fileWriter).toHaveBeenCalledTimes(1);
+	expect(fileWriter.mock.calls[0][0]).toHaveProperty('path', 'test.jpg');
+	expect(fileWriter.mock.calls[0][1]).toBeInstanceOf(Stream);
 });
 
 test('extract symlinks', async () => {
@@ -46,4 +61,11 @@ test('return empty array if non-valid file is supplied', async () => {
 test('throw on wrong input', async () => {
 	await expect(m()('foo' as unknown as Buffer))
 		.rejects.toThrow('Expected a Buffer or Stream, got string');
+});
+
+test('throw once fileWriter throwed', async () => {
+	const fileWriter = jest.fn().mockRejectedValue(new Error('Test throw'));
+	const buf = readFileSync(join(FIXTURES_DIR, 'file.tar'));
+	await expect(m()(buf, { fileWriter }))
+		.rejects.toThrow('Test throw');
 });
