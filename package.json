@@ -1,6 +1,6 @@
 {
 	"name": "@xingrz/decompress-tar",
-	"version": "5.0.0-alpha.1",
+	"version": "5.0.0-alpha.2",
 	"description": "Decompress tar plugin",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
@@ -33,6 +33,7 @@
 	},
 	"homepage": "https://github.com/xingrz/decompress-tar#readme",
 	"dependencies": {
+		"@xingrz/decompress-types": "^1.0.1",
 		"file-type": "^16.5.3",
 		"is-stream": "^2.0.1",
 		"pond": "^2.1.2",
@@ -42,7 +43,6 @@
 		"@types/jest": "^27.0.2",
 		"@types/node": "^16.11.7",
 		"@types/tar-stream": "^2.2.2",
-		"@xingrz/decompress-types": "^1.0.0",
 		"jest": "^27.3.1",
 		"ts-jest": "^27.0.7",
 		"typescript": "^4.4.4"

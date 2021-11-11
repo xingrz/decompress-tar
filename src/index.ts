@@ -1,12 +1,11 @@
-import type { File } from '@xingrz/decompress-types';
-import type { Readable } from 'stream';
+import type { DecompressPlugin, File } from '@xingrz/decompress-types';
 import * as fileType from 'file-type';
 import tarStream from 'tar-stream';
 import isStream from 'is-stream';
 import pond from 'pond';
 import { once } from 'events';
 
-export default () => async (input: Buffer | Readable): Promise<File[]> => {
+export default (): DecompressPlugin<void> => async (input) => {
 	const isBuffer = Buffer.isBuffer(input);
 	const type = isBuffer ? await fileType.fromBuffer(input) : null;
 
