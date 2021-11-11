@@ -1,4 +1,4 @@
-import type { File } from '@xingrz/decompress';
+import type { File } from '@xingrz/decompress-types';
 import type { Readable } from 'stream';
 import * as fileType from 'file-type';
 import tarStream from 'tar-stream';
