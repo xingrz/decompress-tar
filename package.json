@@ -1,6 +1,6 @@
 {
 	"name": "@xingrz/decompress-tar",
-	"version": "5.1.0-alpha.1",
+	"version": "5.1.0-alpha.2",
 	"description": "Decompress tar plugin",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
