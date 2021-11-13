@@ -1,5 +1,5 @@
 import { readFileSync, createReadStream } from 'fs';
-import { Stream } from 'stream';
+import { PassThrough, Stream } from 'stream';
 import { join } from 'path';
 import fileType from 'file-type';
 import m from '../src';
@@ -61,6 +61,15 @@ test('return empty array if non-valid file is supplied', async () => {
 test('throw on wrong input', async () => {
 	await expect(m()('foo' as unknown as Buffer))
 		.rejects.toThrow('Expected a Buffer or Stream, got string');
+});
+
+test('throw once input stream emited "error"', async () => {
+	const stream = new PassThrough();
+	process.nextTick(() => {
+		stream.emit('error', new Error('Test error'));
+	});
+	await expect(m()(stream))
+		.rejects.toThrow('Test error');
 });
 
 test('throw once fileWriter throwed', async () => {

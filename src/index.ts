@@ -57,6 +57,7 @@ export default (): DecompressPlugin<DecompressPluginOptions> => async (input, op
 	if (Buffer.isBuffer(input)) {
 		extract.end(input);
 	} else {
+		input.once('error', e => extract.emit('error', e));
 		input.pipe(extract);
 	}
 
