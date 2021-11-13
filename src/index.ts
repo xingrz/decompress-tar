@@ -36,18 +36,18 @@ export default (): DecompressPlugin<DecompressPluginOptions> => async (input, op
 			type: header.type,
 		};
 
-		if (header.type === 'symlink' || header.type === 'link') {
+		if (file.type === 'symlink' || file.type === 'link') {
 			file.linkname = header.linkname!;
-		} else if (header.type == 'file') {
-			try {
-				if (opts?.fileWriter) {
-					await opts.fileWriter(file, stream);
-				} else {
-					file.data = await pond(stream).spoon();
-				}
-			} catch (e) {
-				return next(e);
+		}
+
+		try {
+			if (opts?.fileWriter) {
+				await opts.fileWriter(file, file.type == 'file' ? stream : undefined);
+			} else if (file.type == 'file') {
+				file.data = await pond(stream).spoon();
 			}
+		} catch (e) {
+			return next(e);
 		}
 
 		files.push(file);
