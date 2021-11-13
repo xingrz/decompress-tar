@@ -5,6 +5,10 @@ node_modules
 
 .vscode
 .github
+.editorconfig
+.gitattributes
 
 jest.config.js
 /test
+
+tsconfig.json

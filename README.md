@@ -7,8 +7,8 @@
 
 ## Install
 
-```
-$ npm install --save @xingrz/decompress-tar
+```sh
+npm install --save @xingrz/decompress-tar
 ```
 
 ## Usage
